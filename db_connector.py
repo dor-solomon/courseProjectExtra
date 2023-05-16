@@ -4,8 +4,8 @@ import datetime as dt
 
 schema_name = '***REMOVED***'
 u = Table(f"{schema_name}.users2")
-conn = pymysql.connect(host='sql7.freemysqlhosting.net', port=3306, user='***REMOVED***', password='***REMOVED***',
-                           db='***REMOVED***', autocommit=True)
+#conn = pymysql.connect(host='sql7.freemysqlhosting.net', port=3306, user='***REMOVED***', password='***REMOVED***',
+#                           db='***REMOVED***', autocommit=True)
 
 
 def add_user(user_id, user_name):
@@ -15,6 +15,8 @@ def add_user(user_id, user_name):
          user_id: The unique user id of the row in the DB to insert the data into.
          user_name: The username that will be inserted into the DB.
     """
+    conn = pymysql.connect(host='sql7.freemysqlhosting.net', port=3306, user='***REMOVED***', password='***REMOVED***',
+                           db='***REMOVED***', autocommit=True)
     cursor = conn.cursor()
 
     now = dt.datetime.now()
@@ -46,6 +48,8 @@ def get_user(user_id):
     Returns:
         username: The data from the user_name column, in the user_id's row.
     """
+    conn = pymysql.connect(host='sql7.freemysqlhosting.net', port=3306, user='***REMOVED***', password='***REMOVED***',
+                           db='***REMOVED***', autocommit=True)
     cursor = conn.cursor()
 
     q = Query.from_(u).select("user_name").where(u.user_id == f"{user_id}")
@@ -66,6 +70,8 @@ def update_user(user_id, user_name):
          user_id: The unique user id of the row in the DB to update the data in.
          user_name: The username that will be updated in the DB.
     """
+    conn = pymysql.connect(host='sql7.freemysqlhosting.net', port=3306, user='***REMOVED***', password='***REMOVED***',
+                           db='***REMOVED***', autocommit=True)
     cursor = conn.cursor()
 
     q = u.update().set(u.user_name, f'{user_name}').where(u.user_id == f'{user_id}')
@@ -81,6 +87,8 @@ def delete_user(user_id):
     Parameters:
         user_id: The unique user id of the row in the DB that will be deleted.
     """
+    conn = pymysql.connect(host='sql7.freemysqlhosting.net', port=3306, user='***REMOVED***', password='***REMOVED***',
+                           db='***REMOVED***', autocommit=True)
     cursor = conn.cursor()
 
     q = Query.from_(u).delete().where(u.user_id == f"{user_id}")
@@ -96,6 +104,8 @@ def config():
     Returns:
         conf: The configuration data from the database.
     """
+    conn = pymysql.connect(host='sql7.freemysqlhosting.net', port=3306, user='***REMOVED***', password='***REMOVED***',
+                           db='***REMOVED***', autocommit=True)
     cursor = conn.cursor()
 
     c = Table(f"{schema_name}.config")
