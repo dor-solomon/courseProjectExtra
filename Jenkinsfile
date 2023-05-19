@@ -3,10 +3,6 @@ pipeline {
     options {
     buildDiscarder(logRotator(numToKeepStr: '20', daysToKeepStr: '5'))
     }
-    environment {
-        username = credentials("username")
-        password = credentials("password")
-    }
     stages {
         stage('checkout') {
             steps {
@@ -18,27 +14,27 @@ pipeline {
         }
         stage('run backend server') {
             steps {
-                bat 'start /min python rest_app.py %username% %password%'
+                bat 'start /min python rest_app.py %params.username% %params.password%'
             }
         }
         stage('run frontend server') {
             steps {
-                bat 'start /min python web_app.py %username% %password%'
+                bat 'start /min python web_app.py %params.username% %params.password%'
             }
         }
         stage('run backend_testing') {
             steps {
-                bat 'python backend_testing.py %username% %password%'
+                bat 'python backend_testing.py %params.username% %params.password%'
             }
         }
         stage('run frontend_testing') {
             steps {
-                bat 'python frontend_testing.py %username% %password%'
+                bat 'python frontend_testing.py %params.username% %params.password%'
             }
         }
         stage('run combined_testing') {
             steps {
-                bat 'python combined_testing.py %username% %password%'
+                bat 'python combined_testing.py %params.username% %params.password%'
             }
         }
         stage('run clean_environment') {
