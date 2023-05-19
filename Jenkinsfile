@@ -3,6 +3,10 @@ pipeline {
     options {
     buildDiscarder(logRotator(numToKeepStr: '20', daysToKeepStr: '5'))
     }
+    environment {
+        username = credentials("username")
+        password = credentials("password")
+    }
     stages {
         stage('checkout') {
             steps {
