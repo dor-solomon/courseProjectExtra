@@ -1,6 +1,8 @@
 import requests
-from db_connector import get_user, config
+from db_connector import get_user, config, cmd_args
+from sys import argv
 
+cmd_args(argv)
 user_id = 4
 config = config()
 user_name = config[2]

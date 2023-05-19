@@ -1,7 +1,10 @@
 from flask import Flask, request
-from db_connector import add_user, get_user, update_user, delete_user
+from db_connector import add_user, get_user, update_user, delete_user, cmd_args
 import os
 import signal
+from sys import argv
+
+cmd_args(argv)
 
 app = Flask(__name__)
 

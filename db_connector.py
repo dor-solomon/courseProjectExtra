@@ -2,10 +2,20 @@ import pymysql
 from pypika import Query, Table, Parameter
 import datetime as dt
 
-schema_name = '***REMOVED***'
-u = Table(f"{schema_name}.users2")
-conn = pymysql.connect(host='sql7.freemysqlhosting.net', port=3306, user='***REMOVED***', password='***REMOVED***',
-                           db='***REMOVED***', autocommit=True)
+command_line_args = None
+conn = None
+u = None
+
+
+def cmd_args(args):
+    global command_line_args
+    global conn
+    global u
+    command_line_args = args
+    u = Table(f"{command_line_args[1]}.users2")
+    conn = pymysql.connect(host='sql7.freemysqlhosting.net', port=3306, user=f'{command_line_args[1]}',
+                           password=f'{command_line_args[2]}',
+                           db=f'{command_line_args[1]}', autocommit=True)
 
 
 def add_user(user_id, user_name):
@@ -102,7 +112,7 @@ def config():
     """
     cursor = conn.cursor()
 
-    c = Table(f"{schema_name}.config")
+    c = Table(f"{command_line_args[1]}.config")
     q = Query.from_(c).select("*")
     cursor.execute(q.get_sql(quote_char=None))
     conf = cursor.fetchone()

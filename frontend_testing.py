@@ -3,7 +3,10 @@ from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.firefox.service import Service as Servicef
 from selenium.webdriver.common.by import By
-from db_connector import config
+from db_connector import config, cmd_args
+from sys import argv
+
+cmd_args(argv)
 
 user_id = 4
 config = config()

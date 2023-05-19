@@ -1,7 +1,10 @@
 from flask import Flask
-from db_connector import get_user
+from db_connector import get_user, cmd_args
 import os
 import signal
+from sys import argv
+
+cmd_args(argv)
 
 app = Flask(__name__)
 
