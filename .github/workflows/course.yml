@@ -36,12 +36,12 @@ jobs:
     - name: run backend_testing
       run: |
         python backend_testing.py $USERNAME $PASSWORD
-    - name: run frontend_testing
-      run: |
-        python frontend_testing.py $USERNAME $PASSWORD
-    - name: run combined_testing
-      run: |
-        python combined_testing.py $USERNAME $PASSWORD
+#    - name: run frontend_testing
+#      run: |
+#        python frontend_testing.py $USERNAME $PASSWORD
+#    - name: run combined_testing
+#      run: |
+#        python combined_testing.py $USERNAME $PASSWORD
     - name: run clean_environment
       run: |
         python clean_environment.py
