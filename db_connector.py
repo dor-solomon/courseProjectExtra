@@ -65,10 +65,10 @@ def get_user(user_id):
     username = cursor.fetchone()
     cursor.close()
     conn.close()
-    try:
-        return username[0]
-    except TypeError:
+    if username is None:
         return username
+    else:
+        return username[0]
 
 
 def update_user(user_id, user_name):
