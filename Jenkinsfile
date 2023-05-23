@@ -6,6 +6,7 @@ pipeline {
     environment {
         username = credentials("username")
         password = credentials("password")
+        email = credentials("email")
     }
     stages {
         stage('checkout') {
@@ -47,4 +48,13 @@ pipeline {
             }
         }
     }
+        post {
+            failure {
+                emailext (
+                    to: '%email%',
+                    subject: "FAILURE",
+                    body: "Failed"
+                )
+            }
+        }
 }
