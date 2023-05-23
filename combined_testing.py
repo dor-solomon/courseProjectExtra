@@ -25,7 +25,7 @@ firefox_service = Servicef(GeckoDriverManager().install(), log_path=path.devnull
 
 chrome_options = Options()
 options = [
-    "--headless",
+    "--headless=new",
     "--window-size=1920,1200",
     "--ignore-certificate-errors",
     "--disable-extensions",
