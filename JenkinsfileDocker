@@ -57,7 +57,7 @@ pipeline {
         }
         stage('test docker container') {
             steps {
-                bat 'python docker_backend_testing.py'
+                bat 'python docker_backend_testing.py %username% %password%'
             }
         }
         stage('clean environment') {
