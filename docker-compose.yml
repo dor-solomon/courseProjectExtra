@@ -1,0 +1,6 @@
+services:
+  rest:
+    build:
+        context: .
+    ports:
+     - "5000:5000"
