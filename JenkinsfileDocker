@@ -1,0 +1,70 @@
+pipeline {
+    agent any
+    options {
+    buildDiscarder(logRotator(numToKeepStr: '20', daysToKeepStr: '5'))
+    }
+    environment {
+        username = credentials("username")
+        password = credentials("password")
+        dusername = credentials("dusername")
+        dpassword = credentials("dpassword")
+    }
+    stages {
+        stage('checkout') {
+            steps {
+                script {
+                    properties([pipelineTriggers([pollSCM('*/30 * * * *')])])
+                }
+                git 'https://github.com/dor-solomon/courseProjectExtra.git'
+            }
+        }
+        stage('run backend server') {
+            steps {
+                bat 'start /min python rest_app.py %username% %password%'
+            }
+        }
+        stage('run backend_testing') {
+            steps {
+                bat 'python backend_testing.py %username% %password%'
+            }
+        }
+        stage('run clean_environment') {
+            steps {
+                bat 'python clean_environment.py'
+            }
+        }
+        stage('build docker image') {
+            steps {
+                bat 'docker build . -t %dusername%/rest'
+            }
+        }
+        stage('push docker image') {
+            steps {
+                bat 'echo "%dusername%" | docker login -u "%dpassword%" --password-stdin'
+                bat 'docker push %dusername%/rest'
+            }
+        }
+        stage('set compose image version') {
+            steps {
+                bat 'echo IMAGE_TAG=${BUILD_NUMBER} > .env'
+            }
+        }
+        stage('docker-compose up') {
+            steps {
+                bat 'docker-compose build --build-arg username=%username% --build-arg password=%password%'
+                bat 'docker-compose up -d'
+            }
+        }
+        stage('test docker container') {
+            steps {
+                bat 'python docker_backend_testing.py'
+            }
+        }
+        stage('clean environment') {
+            steps {
+                bat 'docker-compose down'
+                bat 'docker rmi'
+            }
+        }
+    }
+}
