@@ -1,6 +1,6 @@
 services:
   rest:
-    image: rest:${IMAGE_TAG}
+    image: dorsolomon/rest:${IMAGE_TAG}
     build:
         context: .
     ports:

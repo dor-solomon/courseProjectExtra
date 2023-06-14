@@ -1,0 +1,20 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: rest
+spec:
+  selector:
+    matchLabels:
+      app: rest
+  replicas: {{ .Values.replicaCount }}
+  template:
+    metadata:
+      labels:
+        app: rest
+    spec:
+      containers:
+      - name: rest
+        image: {{ .Values.image.repository }}
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 5000
