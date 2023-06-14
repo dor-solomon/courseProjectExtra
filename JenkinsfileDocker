@@ -66,5 +66,25 @@ pipeline {
                 bat 'docker rmi'
             }
         }
+        stage('deploy helm chart') {
+            steps {
+                bat 'helm install rest-helm rest-helm --set image.repository=dorsolomon/rest:${BUILD_NUMBER}'
+            }
+        }
+        stage('service url') {
+            steps {
+                bat 'minikube service rest-service -url > k8s_url.txt'
+            }
+        }
+        stage('K8S_backend_testing') {
+            steps {
+                bat 'python K8S_backend_testing.py'
+            }
+        }
+        stage('Clean HELM environment') {
+            steps {
+                bat 'helm delete rest-helm'
+            }
+        }
     }
 }
