@@ -16,5 +16,16 @@ spec:
       - name: rest
         image: {{ .Values.image.repository }}
         imagePullPolicy: Always
+        env:
+          - name: username
+            valueFrom:
+              secretKeyRef:
+                name: rest
+                key: username
+          - name: password
+            valueFrom:
+              secretKeyRef:
+                name: rest
+                key: password
         ports:
         - containerPort: 5000
