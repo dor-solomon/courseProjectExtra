@@ -63,7 +63,7 @@ pipeline {
         stage('clean environment') {
             steps {
                 bat 'docker-compose down'
-                bat 'docker rmi'
+                bat 'docker rmi rest:${BUILD_NUMBER}'
             }
         }
         stage('deploy helm chart') {
