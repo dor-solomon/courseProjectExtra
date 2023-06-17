@@ -13,7 +13,7 @@ def cmd_args(args):
     global u
     command_line_args = args
     u = Table(f"{command_line_args[1]}.users2")
-    conn = pymysql.connect(host='sql7.freemysqlhosting.net', port=3306, user=f'{command_line_args[1]}',
+    conn = pymysql.connect(host=f'{command_line_args[3]}', port=3306, user=f'{command_line_args[1]}',
                            password=f'{command_line_args[2]}',
                            db=f'{command_line_args[1]}', autocommit=True)
 

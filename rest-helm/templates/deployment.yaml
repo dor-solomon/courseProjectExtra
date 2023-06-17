@@ -27,5 +27,10 @@ spec:
               secretKeyRef:
                 name: rest
                 key: password
+          - name: host
+            valueFrom:
+              configMapKeyRef:
+                name: rest-config
+                key: host
         ports:
         - containerPort: 5000
