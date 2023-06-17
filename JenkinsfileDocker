@@ -35,13 +35,13 @@ pipeline {
         }
         stage('build docker image') {
             steps {
-                bat 'docker build . -t %dusername%/rest'
+                bat 'docker build . -t ' + %dusername% + '/rest'
             }
         }
         stage('push docker image') {
             steps {
-                bat 'echo "%dusername%" | docker login -u "%dpassword%" --password-stdin'
-                bat 'docker push %dusername%/rest'
+                bat 'echo %dusername% | docker login -u %dpassword% --password-stdin'
+                bat 'docker push ' + %dusername% + '/rest'
             }
         }
         stage('set compose image version') {
@@ -68,7 +68,7 @@ pipeline {
         }
         stage('deploy helm chart') {
             steps {
-                bat 'helm install rest-helm rest-helm --set image.repository=dorsolomon/rest:${BUILD_NUMBER}'
+                bat 'helm install rest-helm rest-helm --set image.repository=' + %dusername% + '/rest:${BUILD_NUMBER}'
             }
         }
         stage('service url') {
