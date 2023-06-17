@@ -8,7 +8,8 @@ config = config()
 user_name = config[2]
 
 # read url from k8s_url.txt
-k8s = "url"
+with open("k8s_url.txt", "r") as url:
+    k8s = (url.readline())
 
 link = k8s
 
