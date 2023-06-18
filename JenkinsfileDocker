@@ -8,6 +8,7 @@ pipeline {
         password = credentials("password")
         dusername = credentials("dusername")
         dpassword = credentials("dpassword")
+        host = 'mysql'
     }
     stages {
         stage('checkout') {
@@ -20,12 +21,12 @@ pipeline {
         }
         stage('run backend server') {
             steps {
-                bat 'start /min python rest_app.py %username% %password%'
+                bat 'start /min python rest_app.py %username% %password% %host%'
             }
         }
         stage('run backend_testing') {
             steps {
-                bat 'python backend_testing.py %username% %password%'
+                bat 'python backend_testing.py %username% %password% %host%'
             }
         }
         stage('run clean_environment') {
@@ -51,13 +52,13 @@ pipeline {
         }
         stage('docker-compose up') {
             steps {
-                bat 'docker-compose build --build-arg username=%username% --build-arg password=%password%'
+                bat 'docker-compose build --build-arg username=%username% --build-arg password=%password% --build-arg host=%host%'
                 bat 'docker-compose up -d'
             }
         }
         stage('test docker container') {
             steps {
-                bat 'python docker_backend_testing.py %username% %password%'
+                bat 'python docker_backend_testing.py %username% %password% %host%'
             }
         }
         stage('clean environment') {
@@ -78,7 +79,7 @@ pipeline {
         }
         stage('K8S_backend_testing') {
             steps {
-                bat 'python K8S_backend_testing.py'
+                bat 'python K8S_backend_testing.py %username% %password% %host%'
             }
         }
         stage('Clean HELM environment') {
