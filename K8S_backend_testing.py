@@ -9,9 +9,9 @@ user_name = config[2]
 
 # read url from k8s_url.txt
 with open("k8s_url.txt", "r") as url:
-    k8s = (url.readline())
+    k8s = (url.read().rstrip())
 
-link = k8s
+link = k8s + "/users/"
 
 try:
     requests.post(f'{link}{user_id}', json={"user_name":f"{user_name}"})
