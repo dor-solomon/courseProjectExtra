@@ -74,7 +74,7 @@ pipeline {
         }
         stage('service url') {
             steps {
-                bat 'minikube service rest-service -url > k8s_url.txt'
+                bat 'minikube service rest-service --url > k8s_url.txt'
             }
         }
         stage('K8S_backend_testing') {
