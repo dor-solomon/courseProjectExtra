@@ -17,6 +17,9 @@ spec:
       containers:
         - name: mysql
           image: mysql:8-debian
+          volumeMounts:
+          - name: mysql-pvc
+            mountPath: "/var/lib/mysql"
           env:
             - name: MYSQL_ROOT_PASSWORD
               valueFrom:
@@ -40,3 +43,7 @@ spec:
                   key: mysql-database
           ports:
             - containerPort: 3306
+      volumes:
+        - name: mysql-pvc
+          persistentVolumeClaim:
+            claimName: mysql-pvc
