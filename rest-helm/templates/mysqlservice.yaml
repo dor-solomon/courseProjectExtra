@@ -11,4 +11,4 @@ spec:
     name: mysql
   selector:
     app: mysql
-  type: LoadBalancer
+  type: ClusterIP
