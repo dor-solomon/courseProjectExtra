@@ -1,10 +1,12 @@
 import requests
-from db_connector import config, cmd_args
 from sys import argv
+from db_connector import DBfunc
 
-cmd_args(argv)
+args = argv
+db = DBfunc(args[1], args[1], args[2], args[3])
+
 user_id = 4
-config = config()
+config = db.config()
 user_name = config[2]
 
 # read url from k8s_url.txt

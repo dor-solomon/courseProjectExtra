@@ -1,10 +1,11 @@
-from flask import Flask, request, jsonify
-from db_connector import add_user, get_user, update_user, delete_user, cmd_args
 import os
 import signal
 from sys import argv
+from db_connector import DBfunc
+from flask import Flask, request, jsonify
 
-cmd_args(argv)
+args = argv
+db = DBfunc(args[1], args[1], args[2], args[3])
 
 app = Flask(__name__)
 
@@ -35,7 +36,7 @@ def handle_error(error):
 @app.route('/users/<user_id>', methods=['GET', 'POST', 'DELETE', 'PUT'])
 def user(user_id):
     if request.method == 'GET':
-        user_name = get_user(user_id)
+        user_name = db.get_user(user_id)
         if user_name is None:
             return {'status': 'error', 'reason': 'no such id'}, 500
         else:
@@ -45,7 +46,7 @@ def user(user_id):
         request_data = request.json
         user_name = request_data.get('user_name')
         try:
-            add_user(user_id, user_name)
+            db.add_user(user_id, user_name)
             return {'status': 'ok', 'user_added': user_name}, 200
         except:
             return {'status': 'error', 'reason': "id already exists"}, 500
@@ -53,19 +54,19 @@ def user(user_id):
     elif request.method == 'PUT':
         request_data = request.json
         user_name = request_data.get('user_name')
-        updated = get_user(user_id)
+        updated = db.get_user(user_id)
         if updated is None:
             return {'status': 'error', 'reason': 'no such id'}, 500
         else:
-            update_user(user_id, user_name)
+            db.update_user(user_id, user_name)
             return {'status': 'ok', 'user_updated': user_name}, 200
 
     elif request.method == 'DELETE':
-        deleted = get_user(user_id)
+        deleted = db.get_user(user_id)
         if deleted is None:
             return {'status': 'error', 'reason': 'no such id'}, 500
         else:
-            delete_user(user_id)
+            db.delete_user(user_id)
             return {'status': 'ok', 'user_deleted': user_id}, 200
 
 
