@@ -33,12 +33,26 @@ pipeline {
         }
         stage('run backend_testing') {
             steps {
-                bat 'python backend_testing.py %username% %password% %host%'
+                script {
+                    if (isUnix()) {
+                       sh 'nohup python backend_testing.py ${username} ${password} ${host} &'
+                     }
+                     else {
+                       bat 'python backend_testing.py %username% %password% %host%'
+                     }
+                 }
             }
         }
         stage('run clean_environment') {
             steps {
-                bat 'python clean_environment.py'
+                script {
+                    if (isUnix()) {
+                       sh 'nohup python clean_environment.py &'
+                     }
+                     else {
+                       bat 'python clean_environment.py'
+                     }
+                 }
             }
         }
         stage('build docker image') {
