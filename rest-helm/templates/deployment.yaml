@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: rest
+spec:
+  selector:
+    matchLabels:
+      app: rest
+  replicas: {{ .Values.replicaCount }}
+  template:
+    metadata:
+      labels:
+        app: rest
+    spec:
+      containers:
+      - name: rest
+        image: {{ .Values.image.repository }}
+        imagePullPolicy: Always
+        env:
+          - name: username
+            valueFrom:
+              secretKeyRef:
+                name: rest
+                key: username
+          - name: password
+            valueFrom:
+              secretKeyRef:
+                name: rest
+                key: password
+          - name: host
+            valueFrom:
+              configMapKeyRef:
+                name: rest-config
+                key: host
+        ports:
+        - containerPort: 5000

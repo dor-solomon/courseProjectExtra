@@ -1,0 +1,25 @@
+services:
+  rest:
+    depends_on:
+      mysql:
+        condition: service_healthy
+    image: dorsolomon/rest:${IMAGE_TAG}
+    build:
+        context: .
+    ports:
+     - "5000:5000"
+
+  mysql:
+    healthcheck:
+      test: ["CMD", "echo", "1"]
+      interval: 1s
+      timeout: 1s
+      start_period: 1s
+    image: mysql:8-debian
+    ports:
+     - "3306:3306"
+    volumes:
+      - mysql:/var/lib/mysql
+
+volumes:
+  mysql:

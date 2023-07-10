@@ -20,8 +20,3 @@ if resp.get("user_name") == f"{user_name}" and res.status_code == 200:
     print(resp.get("user_name"), res.status_code)
 else:
     raise Exception("test failed")
-
-if db.get_user(user_id) == user_name:
-    print(db.get_user(user_id))
-else:
-    raise Exception("test failed")

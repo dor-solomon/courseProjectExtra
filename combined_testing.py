@@ -1,5 +1,7 @@
 import requests
-from db_connector import get_user, config, cmd_args
+from os import path
+from sys import argv
+from db_connector import DBfunc
 from selenium import webdriver
 from webdriver_manager.chrome import ChromeDriverManager
 from webdriver_manager.chrome import ChromeType
@@ -9,13 +11,12 @@ from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.firefox.service import Service as Servicef
 from selenium.webdriver.firefox.options import Options as Optionsf
 from selenium.webdriver.common.by import By
-from sys import argv
-from os import path
 
-cmd_args(argv)
+args = argv
+db = DBfunc(args[1], args[1], args[2], args[3])
 
 user_id = 4
-config = config()
+config = db.config()
 user_name = config[2]
 link = config[0]
 browser = config[1]
@@ -47,8 +48,8 @@ try:
     else:
         raise Exception("test failed")
 
-    if get_user(user_id) == user_name:
-        print(get_user(user_id))
+    if db.get_user(user_id) == user_name:
+        print(db.get_user(user_id))
     else:
         raise Exception("test failed")
 

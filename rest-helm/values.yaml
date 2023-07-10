@@ -1,0 +1,7 @@
+replicaCount: 5
+
+image:
+  repository: dorsolomon/rest:1
+
+service:
+    type: LoadBalancer
