@@ -8,7 +8,6 @@ pipeline {
         password = credentials("password")
         dusername = credentials("dusername")
         dpassword = credentials("dpassword")
-        host = 'mysql'
     }
     stages {
         stage('checkout') {
