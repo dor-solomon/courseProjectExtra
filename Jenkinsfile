@@ -70,11 +70,11 @@ pipeline {
             steps {
                 script {
                     if (isUnix()) {
-                       sh 'echo ${dusername} | docker login -u ${dpassword} --password-stdin'
+                       sh 'docker login -u ${dusername} -p ${dpassword}'
                        sh 'docker push ${dusername}/rest'
                      }
                      else {
-                       bat 'echo %dusername% | docker login -u %dpassword% --password-stdin'
+                       bat 'docker login -u %dusername% -p %dpassword%'
                        bat 'docker push %dusername%/rest'
                      }
                  }
