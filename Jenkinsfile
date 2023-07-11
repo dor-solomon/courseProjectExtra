@@ -6,8 +6,8 @@ pipeline {
     environment {
         username = credentials("username")
         password = credentials("password")
-        dusername = credentials("dusername")
-        dpassword = credentials("dpassword")
+        dusername = credentials('dusername')
+        dpassword = credentials('dpassword')
     }
     stages {
         stage('checkout') {
@@ -70,7 +70,7 @@ pipeline {
             steps {
                 script {
                     if (isUnix()) {
-                       sh 'docker login -u ${dusername} -p ${dpassword}'
+                       sh 'docker login -u $dusername -p $dpassword'
                        sh 'docker push ${dusername}/rest'
                      }
                      else {
