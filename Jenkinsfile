@@ -96,11 +96,11 @@ pipeline {
             steps {
                 script {
                     if (isUnix()) {
-                       sh 'docker-compose build --build-arg username=${username} --build-arg password=${password} --build-arg host=${host}'
+                       sh 'docker-compose build --no-cache --build-arg username=${username} --build-arg password=${password} --build-arg host=${host}'
                        sh 'docker-compose up -d'
                      }
                      else {
-                       bat 'docker-compose build --build-arg username=%username% --build-arg password=%password% --build-arg host=%host%'
+                       bat 'docker-compose build --no-cache --build-arg username=%username% --build-arg password=%password% --build-arg host=%host%'
                        bat 'docker-compose up -d'
                      }
                  }
