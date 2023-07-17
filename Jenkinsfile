@@ -46,7 +46,7 @@ pipeline {
             steps {
                 script {
                     if (isUnix()) {
-                       sh 'nohup python clean_environment.py &'
+                       sh 'python clean_environment.py'
                      }
                      else {
                        bat 'python clean_environment.py'
