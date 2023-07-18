@@ -8,7 +8,7 @@ from db_connector import DBfunc
 user_id = 4
 #config = db.config()
 user_name = "bill"
-link = "127.0.0.1:5000"  # config[0]
+link = "http://127.0.0.1:5000/"  # config[0]
 
 try:
     requests.post(f'{link}{user_id}', json={"user_name":f"{user_name}"})
