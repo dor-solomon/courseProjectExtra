@@ -123,11 +123,11 @@ pipeline {
                 script {
                     if (isUnix()) {
                        sh 'docker-compose down'
-                       sh 'docker rmi rest:${BUILD_NUMBER}'
+                       sh 'docker rmi ${dusername}/rest:${BUILD_NUMBER}'
                      }
                      else {
                        bat 'docker-compose down'
-                       bat 'docker rmi rest:${BUILD_NUMBER}'
+                       bat 'docker rmi %dusername%/rest:${BUILD_NUMBER}'
                      }
                  }
             }
