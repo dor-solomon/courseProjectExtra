@@ -2,13 +2,13 @@ import requests
 from sys import argv
 from db_connector import DBfunc
 
-args = argv
-db = DBfunc(args[1], args[1], args[2], args[3])
+#args = argv
+#db = DBfunc(args[1], args[1], args[2], args[3])
 
 user_id = 4
-config = db.config()
-user_name = config[2]
-link = config[0]
+#config = db.config()
+user_name = "bill"
+link = "127.0.0.1:5000"  # config[0]
 
 try:
     requests.post(f'{link}{user_id}', json={"user_name":f"{user_name}"})
